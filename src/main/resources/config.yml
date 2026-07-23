@@ -1,1 +1,98 @@
+# SimpleBan Configuration
+# Developed by WRN
 
+# Language settings
+language:
+  # Currently available: English
+  locale: en
+
+
+# Ban settings
+ban-settings:
+
+  # Should banned players be kicked immediately after being banned?
+  kick-player-on-ban: true
+
+  # Save bans automatically
+  auto-save: true
+
+
+# Time settings
+time-settings:
+
+  # Allowed time formats:
+  # s = seconds
+  # m = minutes
+  # h = hours
+  # d = days
+  # w = weeks
+
+  allow-seconds: true
+  allow-minutes: true
+  allow-hours: true
+  allow-days: true
+  allow-weeks: true
+
+
+# Messages
+messages:
+
+  no-permission: "&cYou do not have permission to use this command."
+
+  player-not-found: "&cPlayer was not found."
+
+  invalid-time: "&cInvalid time format."
+
+  permanent-ban:
+    player: |
+      &cYou have been permanently banned!
+      
+      &7Reason: &f%reason%
+      
+      &7Staff: &f%staff%
+
+    broadcast: "&c%player% has been permanently banned."
+
+
+  temporary-ban:
+    player: |
+      &cYou have been temporarily banned!
+      
+      &7Reason: &f%reason%
+      
+      &7Time: &f%duration%
+      
+      &7Staff: &f%staff%
+
+    broadcast: "&c%player% has been temporarily banned for %duration%."
+
+
+  ban-screen:
+    header: "&c&lYou are banned!"
+
+    reason: "&7Reason: &f%reason%"
+
+    remaining-time: "&7Remaining time: &f%time%"
+
+
+# Logging
+logging:
+
+  enabled: true
+
+  # Log bans to console
+  console: true
+
+
+# Update checker
+update-check:
+
+  enabled: true
+
+  # Check for updates when the server starts
+  startup-check: true
+
+  # Automatically download updates
+  auto-download: false
+
+  update-url: "https://updates.wrn.de/simpleban.json"

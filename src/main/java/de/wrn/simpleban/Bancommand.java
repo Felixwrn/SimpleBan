@@ -1,90 +1,143 @@
 package de.wrn.simpleban;
 
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.Bukkit;
+import org.bukkit.command.*;
+import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
+public class BanCommand implements CommandExecutor {
 
-public class BanManager {
-
-    private final File file;
-    private final YamlConfiguration data;
+    private final BanManager manager;
 
 
-    public BanManager(SimpleBan plugin) {
+    public BanCommand(BanManager manager) {
 
-        file = new File(plugin.getDataFolder(), "bans.yml");
+        this.manager = manager;
 
-        if (!file.exists()) {
+    }
 
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
+
+    @Override
+    public boolean onCommand(
+            CommandSender sender,
+            Command command,
+            String label,
+            String[] args
+    ) {
+
+
+        if (args.length < 2) {
+
+            sender.sendMessage(
+                    "§cBenutzung: /" + label + " <Spieler> <Grund>"
+            );
+
+            return true;
+
+        }
+
+
+        Player target = Bukkit.getPlayer(args[0]);
+
+
+        if (target == null) {
+
+            sender.sendMessage(
+                    "§cSpieler nicht gefunden!"
+            );
+
+            return true;
+
+        }
+
+
+        long expire = -1;
+        int start = 1;
+
+
+        if (label.equalsIgnoreCase("tempban")) {
+
+
+            if (args.length < 3) {
+
+                sender.sendMessage(
+                        "§c/tempban <Spieler> <Zeit> <Grund>"
+                );
+
+                return true;
+
             }
 
+
+            expire = System.currentTimeMillis()
+                    + parseTime(args[1]);
+
+
+            start = 2;
+
         }
 
-        data = YamlConfiguration.loadConfiguration(file);
-    }
+
+        StringBuilder reason = new StringBuilder();
 
 
-    public void ban(UUID uuid, String reason, long expire) {
+        for (int i = start; i < args.length; i++) {
 
-        data.set(uuid + ".reason", reason);
-        data.set(uuid + ".expire", expire);
+            reason.append(args[i]).append(" ");
 
-        save();
-    }
-
-
-    public boolean isBanned(UUID uuid) {
-
-        if (!data.contains(uuid.toString()))
-            return false;
-
-
-        long expire = data.getLong(uuid + ".expire");
-
-
-        if (expire != -1 && expire <= System.currentTimeMillis()) {
-
-            data.set(uuid.toString(), null);
-            save();
-
-            return false;
         }
+
+
+        manager.ban(
+                target.getUniqueId(),
+                reason.toString(),
+                expire
+        );
+
+
+        target.kickPlayer(
+                "§cDu wurdest gebannt!\n\n"
+                        + "§7Grund: §f"
+                        + reason
+        );
+
+
+        sender.sendMessage(
+                "§aSpieler wurde gebannt."
+        );
 
 
         return true;
     }
 
 
-    public String getReason(UUID uuid) {
-
-        return data.getString(uuid + ".reason");
-
-    }
+    private long parseTime(String input) {
 
 
-    public long getExpire(UUID uuid) {
-
-        return data.getLong(uuid + ".expire");
-
-    }
+        long multiplier = 1000;
 
 
-    private void save() {
+        if (input.endsWith("m"))
+            multiplier *= 60;
 
-        try {
 
-            data.save(file);
+        else if (input.endsWith("h"))
+            multiplier *= 60 * 60;
 
-        } catch (IOException e) {
 
-            e.printStackTrace();
+        else if (input.endsWith("d"))
+            multiplier *= 60 * 60 * 24;
 
-        }
+
+        else if (input.endsWith("w"))
+            multiplier *= 60 * 60 * 24 * 7;
+
+
+        long number = Long.parseLong(
+                input.substring(0, input.length() - 1)
+        );
+
+
+        return number * multiplier;
+
     }
 }

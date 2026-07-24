@@ -4,7 +4,7 @@
 ![Minecraft](https://img.shields.io/badge/Minecraft-1.21+-green)
 ![Java](https://img.shields.io/badge/Java-21-orange)
 
-A simple and expandable ban system for Paper Minecraft servers.
+A simple and open-source ban system for Paper Minecraft servers.
 
 Developed by **WRN**.
 
@@ -17,9 +17,10 @@ Developed by **WRN**.
 - Custom ban reasons
 - UUID-based player storage
 - YAML data storage
+- Automatic temporary ban expiration
 - Join protection for banned players
 - Configurable messages
-- Automatic expiration of temporary bans
+- Expandable architecture
 
 ---
 
@@ -33,10 +34,10 @@ Developed by **WRN**.
 
 ---
 
-## Installation
+# Installation
 
-1. Download the latest `SimpleBan.jar`
-2. Put the file into your server's plugin folder:
+1. Download the latest release from GitHub.
+2. Put the `.jar` file into your server plugin folder:
 
 ```
 plugins/
@@ -44,7 +45,7 @@ plugins/
 
 3. Restart your Minecraft server.
 
-After the first start, SimpleBan creates:
+SimpleBan will automatically create:
 
 ```
 plugins/
@@ -68,8 +69,6 @@ Example:
 ```
 /permban Steve Advertising
 ```
-
-The player will stay banned until manually unbanned.
 
 ---
 
@@ -95,7 +94,7 @@ Examples:
 
 ---
 
-## Time Formats
+# Time Formats
 
 | Format | Description |
 |---|---|
@@ -104,14 +103,6 @@ Examples:
 | h | Hours |
 | d | Days |
 | w | Weeks |
-
-Example:
-
-```
-30m
-```
-
-= 30 minutes
 
 ---
 
@@ -132,57 +123,25 @@ Configuration file:
 plugins/SimpleBan/config.yml
 ```
 
-Example:
-
-```yml
-ban-settings:
-  kick-player-on-ban: true
-
-logging:
-  enabled: true
-
-update-check:
-  enabled: true
-```
-
----
-
-# Build
-
-This project uses Maven.
-
-Build the plugin:
-
-```bash
-mvn clean package
-```
-
-The compiled plugin will be available at:
-
-```
-target/SimpleBan-1.0.0.jar
-```
+You can customize messages, logging and update settings.
 
 ---
 
 # Development
 
-Project structure:
+Source code:
 
 ```
-SimpleBan/
-│
-├── src/main/java/de/wrn/simpleban/
-│   ├── SimpleBan.java
-│   ├── BanCommand.java
-│   ├── BanManager.java
-│   └── BanListener.java
-│
-├── src/main/resources/
-│   ├── plugin.yml
-│   └── config.yml
-│
-└── pom.xml
+src/main/java/de/wrn/simpleban/
+```
+
+Main classes:
+
+```
+SimpleBan.java
+BanCommand.java
+BanManager.java
+BanListener.java
 ```
 
 ---
@@ -196,13 +155,15 @@ SimpleBan/
 - [ ] MySQL/MariaDB support
 - [ ] Web management panel
 - [ ] WRN Update API integration
-- [ ] Multi-server ban synchronization
+- [ ] Multi-server synchronization
 
 ---
 
 # License
 
-This project is currently closed source.
+This project is open source.
+
+You are free to view, modify and contribute to the project according to the repository license.
 
 ---
 
@@ -210,4 +171,4 @@ This project is currently closed source.
 
 Created by **WRN**
 
-Minecraft plugin development project.
+Minecraft plugin project.

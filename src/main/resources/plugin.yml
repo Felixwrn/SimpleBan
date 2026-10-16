@@ -1,7 +1,7 @@
 name: SimpleBan
 version: 1.0.0
 main: de.wrn.simpleban.SimpleBan
-api-version: 1.21
+api-version: '26.3'
 author: WRN
 description: A simple and expandable Minecraft ban system.
 

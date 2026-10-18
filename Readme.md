@@ -1,8 +1,8 @@
 # SimpleBan
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![Minecraft](https://img.shields.io/badge/Minecraft-1.21+-green)
-![Java](https://img.shields.io/badge/Java-21-orange)
+![Minecraft](https://img.shields.io/badge/Minecraft-26.3-green)
+![Java](https://img.shields.io/badge/Java-25-orange)
 
 A simple and open-source ban system for Paper Minecraft servers.
 
@@ -26,11 +26,10 @@ Developed by **WRN**.
 
 ## Requirements
 
-- Minecraft: `1.21+`
+- Minecraft: `26.3`
 - Server software:
-  - Paper
-  - Spigot
-- Java: `21+`
+  - Paper 26.3 (the plugin is compiled against the Paper API)
+- Java: `25+`
 
 ---
 
@@ -128,6 +127,9 @@ You can customize messages, logging and update settings.
 ---
 
 # Development
+
+With JDK 25 and Maven 3.9+, run `mvn -B -ntp clean verify`. Install
+`target/SimpleBan-1.0.0.jar` on a Paper 26.3 server running Java 25.
 
 Source code:
 
